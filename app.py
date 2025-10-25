@@ -128,15 +128,19 @@ st.markdown("""
     
     /* Section headers with better visibility */
     .section-header {
-        color: #2c3e50;
-        font-size: 32px;
-        font-weight: 700;
+        color: #00509e; /* brighter blue for visibility */
+        font-size: 34px;
+        font-weight: 800;
         margin: 30px 0 20px 0;
         padding-bottom: 10px;
-        border-bottom: 3px solid #0077b6;
+        border-bottom: 4px solid #00b4d8;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        text-shadow: 1px 1px 3px rgba(0,0,0,0.15);
     }
+
     .subsection-header {
-        color: #34495e;
+        color: #00509e;
         font-size: 24px;
         font-weight: 600;
         margin: 25px 0 15px 0;
@@ -185,6 +189,48 @@ st.markdown("""
         font-size: 18px;
     }
     
+    /* Sidebar specific styles */
+    .sidebar .sidebar-content {
+        background: linear-gradient(180deg, #f8f9fa 0%, #e9ecef 100%);
+    }
+    
+    .sidebar-section h3 {
+        font-size: 20px;
+        font-weight: 800;
+        margin-top: 20px;
+        margin-bottom: 10px;
+        background: linear-gradient(90deg, #0077b6, #00b4d8, #90e0ef);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        text-shadow: 1px 1px 3px rgba(0,0,0,0.15);
+    }
+
+    /* Sidebar text and list styling */
+    .sidebar-section p, .sidebar-section li {
+        color: #2c3e50 !important;
+        font-size: 15px;
+        line-height: 1.5;
+    }
+
+    .sidebar-section strong {
+        color: #00509e;
+    }
+    
+    /* Improve overall sidebar text visibility */
+    .css-1d391kg {
+        color: #2c3e50 !important;
+    }
+    
+    .stSidebar .stMarkdown {
+        color: #2c3e50 !important;
+    }
+    
+    .stSidebar h1, .stSidebar h2, .stSidebar h3, .stSidebar h4, .stSidebar h5, .stSidebar h6 {
+        color: #00509e !important;
+    }
+    
     /* Improve overall text visibility */
     .stMarkdown {
         color: #2c3e50;
@@ -192,11 +238,86 @@ st.markdown("""
     h1, h2, h3, h4, h5, h6 {
         color: #2c3e50 !important;
     }
-    
-    /* Sidebar improvements */
-    .css-1d391kg {
-        color: #333333;
-    }
+            /* ========================= */
+/* EXPANDER STYLING SECTION */
+/* ========================= */
+[data-testid="stExpander"] {
+    background: linear-gradient(135deg, #ffffff 0%, #f0faff 100%);
+    border: 2px solid #0077b6;
+    border-radius: 12px !important;
+    box-shadow: 0 4px 10px rgba(0, 119, 182, 0.15);
+    margin-top: 20px;
+    color: #2c3e50;
+}
+
+[data-testid="stExpander"] > div:first-child {
+    background: linear-gradient(90deg, #0077b6, #00b4d8, #90e0ef);
+    border-radius: 12px 12px 0 0;
+    color: white !important;
+    font-weight: 700;
+    font-size: 18px;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+}
+
+/* ========================= */
+/* EXPANDER STYLING SECTION */
+/* ========================= */
+[data-testid="stExpander"] {
+    background-color: #f8fbfd; /* very light blue background */
+    border: 1.5px solid #cce5f6;
+    border-radius: 14px !important;
+    box-shadow: 0 3px 6px rgba(0, 119, 182, 0.08);
+    margin-top: 20px;
+    transition: all 0.3s ease;
+}
+
+[data-testid="stExpander"]:hover {
+    box-shadow: 0 4px 10px rgba(0, 119, 182, 0.2);
+    transform: scale(1.01);
+}
+
+/* Expander label bar */
+[data-testid="stExpander"] > div:first-child {
+    background: #0077b6;
+    color: white !important;
+    font-weight: 700;
+    font-size: 18px;
+    border-radius: 12px 12px 0 0;
+    padding: 10px 12px;
+    text-shadow: 0px 1px 2px rgba(0,0,0,0.25);
+}
+
+/* Inner content styling */
+.expander-content {
+    padding: 12px 16px 10px 16px;
+    color: #1e2a36;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+/* Subheadings inside expander */
+.expander-content h3 {
+    color: #005f8f;
+    font-size: 20px;
+    font-weight: 750;
+    border-left: 4px solid #00b4d8;
+    padding-left: 8px;
+    margin-top: 12px;
+    margin-bottom: 10px;
+}
+
+/* Emphasis text */
+.expander-content strong {
+    color: #004b76;
+}
+
+/* Bullet/number list items */
+.expander-content li {
+    margin-bottom: 5px;
+    color: #1e2a36;
+}
+
+
     </style>
     """, unsafe_allow_html=True)
 
@@ -338,21 +459,37 @@ def create_confidence_heatmap(pred_map):
     return fig
 
 # ---------------- SIDEBAR ----------------
-st.sidebar.header("⚙️ Settings")
+st.sidebar.markdown("""
+<div class='sidebar-section'>
+    <h3>⚙️ Settings</h3>
+</div>
+""", unsafe_allow_html=True)
 
 # Detection Settings
-st.sidebar.subheader("🔍 Detection Settings")
+st.sidebar.markdown("""
+<div class='sidebar-section'>
+    <h3>🔍 Detection Settings</h3>
+</div>
+""", unsafe_allow_html=True)
 threshold = st.sidebar.slider("Confidence Threshold", 0.1, 0.9, THRESHOLD, 0.05)
 alpha = st.sidebar.slider("Overlay Transparency", 0.0, 1.0, 0.4, 0.05)
 
 # Image Enhancement
-st.sidebar.subheader("🖼️ Image Enhancement")
+st.sidebar.markdown("""
+<div class='sidebar-section'>
+    <h3>🖼️ Image Enhancement</h3>
+</div>
+""", unsafe_allow_html=True)
 brightness = st.sidebar.slider("Brightness", 0.5, 2.0, 1.0, 0.1)
 contrast = st.sidebar.slider("Contrast", 0.5, 2.0, 1.0, 0.1)
 sharpness = st.sidebar.slider("Sharpness", 0.0, 2.0, 1.0, 0.1)
 
 # Analysis Options
-st.sidebar.subheader("📊 Analysis Options")
+st.sidebar.markdown("""
+<div class='sidebar-section'>
+    <h3>📊 Analysis Options</h3>
+</div>
+""", unsafe_allow_html=True)
 pixel_size = st.sidebar.number_input("Pixel size (km²)", 0.001, 1.0, 0.01, 0.001, 
                                    help="Estimated area each pixel represents in square kilometers")
 show_confidence_map = st.sidebar.checkbox("Show Confidence Map", True)
@@ -360,17 +497,18 @@ show_metrics = st.sidebar.checkbox("Show Detailed Metrics", True)
 
 st.sidebar.markdown("---")
 st.sidebar.markdown("""
-### 💡 How to Use
-1. **Upload** a satellite image
-2. **Adjust** settings if needed
-3. **Click** Detect Oil Spill
-4. **Analyze** results and download
-
-### 🎯 Tips for Best Results
-- Use high-resolution satellite images
-- Ensure good contrast between water and potential spills
-- Adjust threshold for sensitivity control
-""")
+<div class='sidebar-section'>
+    <h3>💡 How to Use</h3>
+    <p><strong>1. Upload a satellite image</strong></p>
+    <p><strong>2. Adjust settings if needed</strong></p>
+    <p><strong>3. Click Detect Oil Spill</strong></p>
+    <p><strong>4. Analyze results and download</strong></p>
+    <h3>🎯 Tips for Best Results</h3>
+    <p><strong>• Use high-resolution satellite images</strong></p>
+    <p><strong>• Ensure good contrast between water and potential spills</strong></p>
+    <p><strong>• Adjust threshold for sensitivity control</strong></p>
+</div>
+""", unsafe_allow_html=True)
 
 # ---------------- MAIN UI ----------------
 # Feature Introduction

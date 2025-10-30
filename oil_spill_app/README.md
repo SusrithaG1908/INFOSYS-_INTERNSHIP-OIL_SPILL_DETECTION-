@@ -111,7 +111,9 @@ cd oil-spill-detection
 
 ### 2️⃣ Create a Virtual Environment
 
-### Windows (CMD / PowerShell):
+### In VSCode, Open Terminal:
+
+## Backend
 
 ```
 cd backend
@@ -121,23 +123,6 @@ python -m venv venv
 
 # activate (PowerShell)
 venv\Scripts\activate
-```
-
-### 3️⃣ Upgrade pip and Install Dependencies
-
-```
-python -m pip install --upgrade pip setuptools wheel
-pip install -r requirements.txt
-```
-
-### 4️⃣ Create .env in backend/
-
-### Create a file backend/.env with:
-
-```
-MODEL_PATH=final_unet_oilspill.h5
-MONGO_URI=mongodb://localhost:27017
-MONGO_DB_NAME=oilspill_db
 ```
 
 ## Frontend (Streamlit)
@@ -155,11 +140,23 @@ venv\Scripts\activate
 ### 3️⃣ Upgrade pip and Install Dependencies
 
 ```
+cd backend
+python -m pip install --upgrade pip setuptools wheel
+pip install -r requirements.txt
+cd frontend
 python -m pip install --upgrade pip setuptools wheel
 pip install -r requirements.txt
 ```
 
-### 4️⃣ Create .env in frontend/
+### 4️⃣ Create .env in backend/
+
+### Create a file backend/.env with:
+
+```
+MODEL_PATH=final_unet_oilspill.h5
+MONGO_URI=mongodb://localhost:27017
+MONGO_DB_NAME=oilspill_db
+```
 
 ### Create a file frontend/.env with:
 
@@ -167,34 +164,17 @@ pip install -r requirements.txt
 BACKEND_URL=http://127.0.0.1:8000
 ```
 
-### 5️⃣ Run Backend
+### 5️⃣ Run Backend & Frontend
 
 ```
 cd backend
 python -m uvicorn main:app --reload --port 8000
 ```
 
----
-
-## Frontend (Streamlit)
-
-### 1. Create another Web Service for frontend.
-
-### 2. Set build command:
-
 ```
-pip install -r requirements.txt
-```
-
-### 3. Set start command:
-
-```
+cd frontend
 streamlit run app.py --server.port 10000 --server.address 0.0.0.0
 ```
-
-### 4. Set BACKEND_URL in frontend .env to your backend's Render URL.
-
-### 5.Deploy.
 
 ---
 

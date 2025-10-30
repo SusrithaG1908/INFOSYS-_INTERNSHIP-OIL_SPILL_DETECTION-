@@ -6,4 +6,5 @@ numpy
 python-multipart
 pymongo
 tensorflow
+dotenv
 

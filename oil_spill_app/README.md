@@ -21,9 +21,9 @@ An end-to-end intelligent system that automatically identifies and segments **oi
 Oil spills cause severe environmental damage, affecting marine ecosystems, fisheries, and coastal communities.  
 Traditional detection methods rely on **manual satellite image inspection** or **field surveys**, which are:
 
-- Time-consuming  
-- Costly and inefficient  
-- Prone to human errors  
+- Time-consuming
+- Costly and inefficient
+- Prone to human errors
 
 ---
 
@@ -31,10 +31,10 @@ Traditional detection methods rely on **manual satellite image inspection** or *
 
 To build an **AI-powered Oil Spill Detection & Monitoring System** that can:
 
-- Automatically detect oil spills from satellite imagery  
-- Highlight affected regions using semantic segmentation  
-- Provide real-time visualization via a user-friendly web interface  
-- Log detection results and analytics in a database for future monitoring  
+- Automatically detect oil spills from satellite imagery
+- Highlight affected regions using semantic segmentation
+- Provide real-time visualization via a user-friendly web interface
+- Log detection results and analytics in a database for future monitoring
 
 ---
 
@@ -44,44 +44,43 @@ To build an **AI-powered Oil Spill Detection & Monitoring System** that can:
 
 Satellite Image → Preprocessing → U-Net Model → FastAPI Backend → MongoDB → Streamlit Frontend → User
 
-
 ### 🔹 Components
 
-- **Data Source:** Sentinel-1 SAR / MODIS / Kaggle datasets  
-- **Preprocessing:** Normalization, resizing, speckle noise reduction, and augmentation  
-- **Model:** U-Net segmentation CNN for oil spill detection  
-- **Backend:** FastAPI for inference and data management  
-- **Frontend:** Streamlit for visualization and user interaction  
-- **Database:** MongoDB for storing input images, results, and reports  
+- **Data Source:** Sentinel-1 SAR / MODIS / Kaggle datasets
+- **Preprocessing:** Normalization, resizing, speckle noise reduction, and augmentation
+- **Model:** U-Net segmentation CNN for oil spill detection
+- **Backend:** FastAPI for inference and data management
+- **Frontend:** Streamlit for visualization and user interaction
+- **Database:** MongoDB for storing input images, results, and reports
 
 ---
 
 ## ⚙️ Technology Stack
 
-| Layer | Tools / Frameworks Used |
-|:--|:--|
-| **Language** | Python |
-| **ML / DL Frameworks** | TensorFlow, Keras |
+| Layer                  | Tools / Frameworks Used       |
+| :--------------------- | :---------------------------- |
+| **Language**           | Python                        |
+| **ML / DL Frameworks** | TensorFlow, Keras             |
 | **Model Architecture** | U-Net (Semantic Segmentation) |
-| **Data Handling** | NumPy, Pandas, OpenCV, PIL |
-| **Visualization** | Matplotlib, Plotly |
-| **Backend** | FastAPI |
-| **Frontend** | Streamlit |
-| **Database** | MongoDB |
-| **Deployment** | Render Cloud |
-| **Environment Config** | `.env`, Virtual Environment |
+| **Data Handling**      | NumPy, Pandas, OpenCV, PIL    |
+| **Visualization**      | Matplotlib, Plotly            |
+| **Backend**            | FastAPI                       |
+| **Frontend**           | Streamlit                     |
+| **Database**           | MongoDB                       |
+| **Deployment**         | Render Cloud                  |
+| **Environment Config** | `.env`, Virtual Environment   |
 
 ---
 
 ## 🧠 Machine Learning Pipeline
 
-1. **Data Collection** – Oil Spill dataset (Kaggle / Sentinel-1)  
-2. **Preprocessing & Augmentation** – Resize to 256×256, normalize, denoise, and apply rotations/flips  
-3. **Model Design** – U-Net encoder–decoder segmentation architecture  
-4. **Training** – Dice + Binary Cross-Entropy loss, Adam optimizer  
-5. **Evaluation Metrics** – IoU, Dice Coefficient, Precision, Recall  
-6. **Visualization** – Overlay masks on satellite images for clear detection  
-7. **Deployment** – Integrated with FastAPI backend and Streamlit frontend  
+1. **Data Collection** – Oil Spill dataset (Kaggle / Sentinel-1)
+2. **Preprocessing & Augmentation** – Resize to 256×256, normalize, denoise, and apply rotations/flips
+3. **Model Design** – U-Net encoder–decoder segmentation architecture
+4. **Training** – Dice + Binary Cross-Entropy loss, Adam optimizer
+5. **Evaluation Metrics** – IoU, Dice Coefficient, Precision, Recall
+6. **Visualization** – Overlay masks on satellite images for clear detection
+7. **Deployment** – Integrated with FastAPI backend and Streamlit frontend
 
 ---
 
@@ -91,18 +90,21 @@ Satellite Image → Preprocessing → U-Net Model → FastAPI Backend → MongoD
 2️⃣ Image is sent to the **FastAPI backend**  
 3️⃣ The trained **U-Net model** performs segmentation  
 4️⃣ The system returns:
-   - Original image  
-   - Segmentation mask  
-   - Overlayed detection image  
-   - Technical summary (IoU, Dice, timestamp)  
-5️⃣ **MongoDB** stores results for historical reference  
+
+- Original image
+- Segmentation mask
+- Overlayed detection image
+- Technical summary (IoU, Dice, timestamp)  
+  5️⃣ **MongoDB** stores results for historical reference
 
 ---
 
 ## 💻 How to Run Locally
 
 ### 1️⃣ Clone the Repository
+
 ```bash
+git lfs install
 git clone https://github.com/<your-org>/oil-spill-detection.git
 cd oil-spill-detection
 ```
@@ -110,91 +112,103 @@ cd oil-spill-detection
 ### 2️⃣ Create a Virtual Environment
 
 ### Windows (CMD / PowerShell):
+
 ```
+cd backend
+
 # create venv
 python -m venv venv
 
 # activate (PowerShell)
-venv\Scripts\Activate.ps1
-
-# OR activate (CMD)
-venv\Scripts\activate.bat
+venv\Scripts\activate
 ```
 
-### 3️⃣ Install Dependencies
+### 3️⃣ Upgrade pip and Install Dependencies
 
 ```
+python -m pip install --upgrade pip setuptools wheel
 pip install -r requirements.txt
 ```
 
 ### 4️⃣ Create .env in backend/
 
 ### Create a file backend/.env with:
+
 ```
 MODEL_PATH=final_unet_oilspill.h5
 MONGO_URI=mongodb://localhost:27017
 MONGO_DB_NAME=oilspill_db
 ```
 
+## Frontend (Streamlit)
+
+```
+cd frontend
+
+# create venv
+python -m venv venv
+
+# activate (PowerShell)
+venv\Scripts\activate
+```
+
+### 3️⃣ Upgrade pip and Install Dependencies
+
+```
+python -m pip install --upgrade pip setuptools wheel
+pip install -r requirements.txt
+```
+
+### 4️⃣ Create .env in frontend/
+
+### Create a file frontend/.env with:
+
+```
+BACKEND_URL=http://127.0.0.1:8000
+```
+
 ### 5️⃣ Run Backend
 
 ```
 cd backend
-uvicorn main:app --reload
+python -m uvicorn main:app --reload --port 8000
 ```
-
-### 6️⃣ Run Frontend
-
-### Open a new terminal (with the virtual env active) and run:
-```
-cd frontend
-streamlit run app.py
-```
-
----
-
-## ☁️ Deployment (Render)
-### Backend (FastAPI)
-
-### 1. Create a Web Service on Render.
-### 2. Set build command:
-```
-pip install -r requirements.txt
-```
-### 3. Set start command:
-```
-uvicorn main:app --host 0.0.0.0 --port 10000
-```
-### 4. Provide environment variables (MODEL_PATH, MONGO_URI, etc.) in Render settings.
-### 5. Deploy.
 
 ---
 
 ## Frontend (Streamlit)
+
 ### 1. Create another Web Service for frontend.
+
 ### 2. Set build command:
+
 ```
 pip install -r requirements.txt
 ```
+
 ### 3. Set start command:
+
 ```
 streamlit run app.py --server.port 10000 --server.address 0.0.0.0
 ```
+
 ### 4. Set BACKEND_URL in frontend .env to your backend's Render URL.
+
 ### 5.Deploy.
 
 ---
 
 ## 📊 Results & Visualizations
-### Input Image                                                 Predicted Output
 
+### Input Image Predicted Output
 
 ### Model Metrics
+
 |      Metric      | Value |
 | :--------------: | :---: |
-|        IoU       | ~0.89 |
+|       IoU        | ~0.89 |
 | Dice Coefficient | ~0.91 |
-|     Precision    | ~0.93 |
+|    Precision     | ~0.93 |
 |      Recall      | ~0.88 |
 
 ---
@@ -202,9 +216,13 @@ streamlit run app.py --server.port 10000 --server.address 0.0.0.0
 ## 🌟 Highlights
 
 ### > End-to-end pipeline: data → model → API → UI
+
 ### > Real-time oil spill detection with U-Net segmentation
+
 ### > Streamlit frontend for easy interaction and reporting
+
 ### > MongoDB storage for audit and historical analysis
+
 ### > Render deployment for accessibility
 
 ---
@@ -212,8 +230,11 @@ streamlit run app.py --server.port 10000 --server.address 0.0.0.0
 ## 🧩 Key Learnings
 
 ### > Implemented full ML lifecycle: preprocessing, training, evaluation, deployment
+
 ### > Gained expertise in semantic segmentation for satellite imagery
+
 ### > Integrated FastAPI, Streamlit, and MongoDB in a production-like setup
+
 ### > Learned cloud deployment and secure environment configuration
 
 ---
@@ -221,11 +242,13 @@ streamlit run app.py --server.port 10000 --server.address 0.0.0.0
 ## 👩‍💻 Contributors
 
 ### Developed by: [Susritha Gudimetla]
+
 ### Guided by: [Namala Eekshita / Infosys]
+
 ### Duration: 8 Weeks Internship
 
-
 ### 📧 Contact: gudimetlasusritha@gmail.com
+
 ### GitHub: https://github.com/SusrithaG1908
 
 ---
@@ -233,9 +256,7 @@ streamlit run app.py --server.port 10000 --server.address 0.0.0.0
 ## 📜 License
 
 ### This project is for educational and research purposes.
+
 ### © 2025 Susritha Gudimetla. All rights reserved.
 
 ---
-
-
-
